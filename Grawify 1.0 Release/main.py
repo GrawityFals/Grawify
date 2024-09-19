@@ -90,8 +90,6 @@ def play_song(index: int) -> bool:
     global stats
     global state
 
-    print(index)
-
     local_settings = settings.copy()
 
     songs = get_songs_list()
