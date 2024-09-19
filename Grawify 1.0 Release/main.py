@@ -90,6 +90,8 @@ def play_song(index: int) -> bool:
     global stats
     global state
 
+    print(index)
+
     local_settings = settings.copy()
 
     songs = get_songs_list()
@@ -129,7 +131,9 @@ def play_song(index: int) -> bool:
 def play_songs_in_order() -> None:
     global settings
 
-    for i in range(len(songs_folder)):
+    folder_length = len(os.listdir(songs_folder))
+
+    for i in range(folder_length):
         get_song_name(i)
         display_song_playing()
 
@@ -146,7 +150,9 @@ def play_random_song() -> None:
     global settings
 
     while True:
-        random_song = random.randint(0, len(songs_folder)-1)
+        folder_length = len(os.listdir(songs_folder))
+
+        random_song = random.randint(0, folder_length-1)
 
         get_song_name(random_song)
         display_song_playing()
@@ -161,10 +167,13 @@ def play_random_song() -> None:
 def play_random_song_you_have_not_played() -> None:
     global settings
 
-    songs_played = list(range(len(songs_folder)))
+    folder_length = len(os.listdir(songs_folder))
+
+    songs_played = list(range(folder_length))
 
     while songs_played:
         random_index = random.randint(0, len(songs_played) - 1)
+
         song_index = songs_played[random_index]
 
         get_song_name(song_index)
@@ -177,6 +186,8 @@ def play_random_song_you_have_not_played() -> None:
         songs_played.pop(random_index)
 
         time.sleep(settings["delay_between_songs"])
+
+    play_random_song_you_have_not_played()
 
 
 def clear_screen() -> None:
