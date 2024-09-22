@@ -19,21 +19,57 @@ state = {
 }
 
 
+def get_stats() -> {str: int}:
+    return stats
+
+
+def change_stats(child: str, value: int) -> None:
+    local_stats = get_stats()
+
+    local_stats[child] = value
+
+
+def get_settings() -> {str: str | int}:
+    return settings
+
+
+def change_settings(child: str, value: str | int) -> None:
+    local_settings = get_settings()
+
+    local_settings[child] = value
+
+
+def get_state() -> {str: str | bool}:
+    return state
+
+
+def change_state(child: str, value: str | bool) -> None:
+    local_state = get_state()
+
+    local_state[child] = value
+
+
 def load_data() -> None:
-    global settings
-    global stats
+    local_settings = get_settings()
+    local_stats = get_stats()
 
     with open('Settings.json', 'r') as file:
         data = json.load(file)
 
         if data:
-            settings = data
+            i = 0
+            for key in local_settings.keys():
+                change_settings(key, data[i])
+                i += 1
 
     with open('Stats.json', 'r') as file:
         data = json.load(file)
 
         if data:
-            stats = data
+            i = 0
+            for key in local_stats.keys():
+                change_stats(key, data[i])
+                i += 1
 
 
 def save_data() -> None:
@@ -42,33 +78,3 @@ def save_data() -> None:
 
     with open('Stats.json', 'w') as file:
         json.dump(stats, file, indent=4)
-
-
-def get_stats() -> {str: int}:
-    return stats
-
-
-def change_stats(child: str, value: int) -> None:
-    global stats
-
-    stats[child] = value
-
-
-def get_settings() -> {str: str | int}:
-    return settings
-
-
-def change_settings(child: str, value: str | int) -> None:
-    global settings
-
-    settings[child] = value
-
-
-def get_state() -> {str: str | bool}:
-    return state
-
-
-def change_state(child: str, value: str | bool) -> None:
-    global state
-
-    state[child] = value
