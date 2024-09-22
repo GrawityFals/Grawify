@@ -57,19 +57,15 @@ def load_data() -> None:
         data = json.load(file)
 
         if data:
-            i = 0
             for key in local_settings.keys():
-                change_settings(key, data[i])
-                i += 1
+                change_settings(key, data[key])
 
     with open('Stats.json', 'r') as file:
         data = json.load(file)
 
         if data:
-            i = 0
             for key in local_stats.keys():
-                change_stats(key, data[i])
-                i += 1
+                change_stats(key, data[key])
 
 
 def save_data() -> None:
